@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="iths_labb_3_quiz_configurator.Views.DialogUserContols.NewPack"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iths_labb_3_quiz_configurator.Views.DialogUserContols"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style TargetType="Label">
+                <Setter Property="FontWeight"
+                        Value="Bold" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Width"
+                        Value="50" />
+                <Setter Property="Margin"
+                        Value="10" />
+            </Style>
+        </StackPanel.Resources>
+        <Label Content="Pack Name:" />
+        <TextBox Text="{Binding NewPackTitle}"/>
+        <Label Content="Difficulty:" />
+        <ComboBox SelectedItem="{Binding SelectedDifficulty}"
+                  ItemsSource="{Binding Difficulties}">
+        </ComboBox>
+        <DockPanel>
+            <Label DockPanel.Dock="Left"
+                   Content="Time Limit:" />
+            <Label FontWeight="Normal"
+                   DockPanel.Dock="Right"
+                   Content="Seconds" />
+            <Label FontWeight="Normal"
+                   DockPanel.Dock="Right"
+                   Content="{Binding TimeLimit}" />
+            <Label FontWeight="Normal"
+                   DockPanel.Dock="Left"
+                   Content="" />
+        </DockPanel>
+        <Slider Value="{Binding TimeLimit}" 
+                Minimum="5"
+                IsSnapToTickEnabled="True"
+                TickFrequency="5"
+                TickPlacement="BottomRight"
+                Maximum="120" />
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Content="Cancel"/>
+            <Button Content="Create"
+                    Command="{Binding CreateNewPackCommand}"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

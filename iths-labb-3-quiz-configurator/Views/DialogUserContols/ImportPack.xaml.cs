@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace iths_labb_3_quiz_configurator.Views.UserControls
+namespace iths_labb_3_quiz_configurator.Views.DialogUserContols
 {
     /// <summary>
-    /// Interaction logic for QuizPackBuilderView.xaml
+    /// Interaction logic for ImportPack.xaml
     /// </summary>
-    public partial class QuizPackBuilderView : UserControl
+    public partial class ImportPack : UserControl
     {
-        public QuizPackBuilderView()
+        public ImportPack()
         {
             InitializeComponent();
         }

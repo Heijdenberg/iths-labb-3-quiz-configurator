@@ -2,8 +2,22 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:iths_labb_3_quiz_configurator"
+             xmlns:uc="clr-namespace:iths_labb_3_quiz_configurator.Views.UserControls"
+             xmlns:dialog="clr-namespace:iths_labb_3_quiz_configurator.Views.DialogUserContols"
+             xmlns:vm="clr-namespace:iths_labb_3_quiz_configurator.ViewModels"
              StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type vm:ConfigurationViewModel}">
+            <uc:ConfigurationView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PlayerViewModel}">
+            <uc:QuizPlayView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewPackViewModel}">
+            <dialog:NewPack />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MenuViewModel}">
+            <uc:Menu />
+        </DataTemplate>
     </Application.Resources>
 </Application>

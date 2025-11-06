@@ -1,6 +1,8 @@
-﻿using iths_labb_3_quiz_configurator.Services;
-using iths_labb_3_quiz_configurator.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,21 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace iths_labb_3_quiz_configurator.Views;
 
 /// <summary>
-/// Interaction logic for MainWindow.xaml
+/// Interaction logic for Dialog.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class Dialog : Window
 {
-    public MainWindow()
+    public Dialog()
     {
         InitializeComponent();
-        var windowService = new WindowService();
-        DataContext = new MainWindowViewModel(windowService);
-
     }
 }
