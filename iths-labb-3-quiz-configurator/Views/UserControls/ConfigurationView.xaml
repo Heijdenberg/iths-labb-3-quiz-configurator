@@ -31,9 +31,12 @@
                                     Value="Center" />
                         </Style>
                     </StackPanel.Resources>
-                    <Button Content="O" />
-                    <Button Content="+" Command="{Binding AddQuestionCommand}" />
-                    <Button Content="-" Command="{Binding RemoveQuestionCommand}" />
+                    <Button Content="O"
+                            Command="{Binding PackSettingsCommand}"/>
+                    <Button Content="+"
+                            Command="{Binding AddQuestionCommand}" />
+                    <Button Content="-"
+                            Command="{Binding RemoveQuestionCommand}" />
                 </StackPanel>
                 <Label />
             </DockPanel>

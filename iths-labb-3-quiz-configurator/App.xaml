@@ -19,6 +19,9 @@
         <DataTemplate DataType="{x:Type vm:ImportPackViewModel}">
             <dialog:ImportPack />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PackSettingsViewModel}">
+            <dialog:PackSettings />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:MenuViewModel}">
             <uc:Menu />
         </DataTemplate>

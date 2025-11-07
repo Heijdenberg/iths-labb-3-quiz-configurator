@@ -18,6 +18,7 @@ class ConfigurationViewModel : ViewModelBase
         _mainWindowViewModel = mainWindowViewModel;
         RemoveQuestionCommand = new DelegateCommand(RemoveQuestion, CanRemoveQuestion);
         AddQuestionCommand = new DelegateCommand(AddQuestion, CanAddQuestion);
+        PackSettingsCommand = new DelegateCommand(_mainWindowViewModel.OpenPackSettings, _mainWindowViewModel.CanOpenPackSettings);
 
         _mainWindowViewModel.PropertyChanged += (s, e) =>
         {
@@ -43,6 +44,7 @@ class ConfigurationViewModel : ViewModelBase
     }
     public DelegateCommand RemoveQuestionCommand { get; }
     public DelegateCommand AddQuestionCommand { get; }
+    public DelegateCommand PackSettingsCommand { get; }
 
     private bool CanAddQuestion(object? arg)
     {

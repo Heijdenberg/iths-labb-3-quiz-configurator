@@ -1,5 +1,6 @@
 ﻿using iths_labb_3_quiz_configurator.Models;
 using iths_labb_3_quiz_configurator.Services;
+using iths_labb_3_quiz_configurator.Views.DialogUserContols;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -70,8 +71,18 @@ namespace iths_labb_3_quiz_configurator.ViewModels
         public void OpenImportPack(object? obj)
         {
             var apiService = new ApiService();
-            var ImportPackModel = new ImportPackViewModel(this, apiService);
-            _windowService.ShowDialog(ImportPackModel);
+            var ImportPackViewModel = new ImportPackViewModel(this, apiService);
+            _windowService.ShowDialog(ImportPackViewModel);
+        }
+
+        public bool CanOpenPackSettings(object? arg)
+        {
+            return true;
+        }
+        public void OpenPackSettings(object? obj)
+        {
+            var PackSettingsViewModel = new PackSettingsViewModel(ActivePack);
+            _windowService.ShowDialog(PackSettingsViewModel);
         }
 
         public bool CanCreateNewPack(object? arg)

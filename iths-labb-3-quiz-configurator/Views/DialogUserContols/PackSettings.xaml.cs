@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace iths_labb_3_quiz_configurator.Views.DialogUserContols
 {
     /// <summary>
-    /// Interaction logic for SettingsPack.xaml
+    /// Interaction logic for PackSettings.xaml
     /// </summary>
-    public partial class SettingsPack : UserControl
+    public partial class PackSettings : UserControl
     {
-        public SettingsPack()
+        public PackSettings()
         {
             InitializeComponent();
         }
