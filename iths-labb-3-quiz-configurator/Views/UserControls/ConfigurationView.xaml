@@ -44,7 +44,10 @@
         </Grid>
         <StackPanel Grid.Column="1" Margin="20">
             <Label Content="Question:" />
-            <TextBox Text="{Binding ActiveQuestion.Query, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 20" MinLines="5" />
+            <TextBox Text="{Binding ActiveQuestion.Query, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0 0 0 20"
+                     MinLines="5"
+                     TextWrapping="Wrap"/>
             <Label Content="Corrext Answer:" />
             <TextBox Text="{Binding ActiveQuestion.CorrectAnswer, UpdateSourceTrigger=PropertyChanged}" />
             <Label Content="First Incorrect Answer:" />

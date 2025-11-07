@@ -1,4 +1,6 @@
 ﻿using iths_labb_3_quiz_configurator.Command;
+using iths_labb_3_quiz_configurator.Models;
+using iths_labb_3_quiz_configurator.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,16 +9,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Xml.Linq;
 
 namespace iths_labb_3_quiz_configurator.ViewModels;
 
-class NewPackViewModel : ViewModelBase
+class NewPackViewModel : ViewModelBase, IRequestClose
 {
+    public event EventHandler<RequestCloseEventArgs> RequestClose;
     private readonly MainWindowViewModel? _mainWindowViewModel;
 
     private string _title;
     private string _newPackTitle;
-    private string _selectedDifficulty;
+    private Difficulty _selectedDifficulty;
     private int _timeLimit;
 
     public NewPackViewModel(MainWindowViewModel mainWindowViewModel)
@@ -25,9 +29,10 @@ class NewPackViewModel : ViewModelBase
 
         Title = "New Question Pack";
         NewPackTitle = "< PackName >";
-        SelectedDifficulty = "Medium";
+        SelectedDifficulty = Difficulty.Medium;
         TimeLimit = 5;
-        CreateNewPackCommand = new DelegateCommand(_mainWindowViewModel.CreateNewPack, _mainWindowViewModel.CanCreateNewPack);
+        OnCreateCommand = new DelegateCommand(OnCreate, CanOnCreate);
+        OnCancelCommand = new DelegateCommand(OnCancel, CanOnCancel);
     }
     public string Title
     { 
@@ -39,7 +44,7 @@ class NewPackViewModel : ViewModelBase
         get => _newPackTitle;
         set => _newPackTitle = value;
     }
-    public string SelectedDifficulty
+    public Difficulty SelectedDifficulty
     {
         get => _selectedDifficulty;
         set => _selectedDifficulty = value;
@@ -53,7 +58,29 @@ class NewPackViewModel : ViewModelBase
             RaisePropertyChanged();
         }
     }
-    public DelegateCommand CreateNewPackCommand { get; }
+
+    public QuestionPack NewPack => new QuestionPack(NewPackTitle, SelectedDifficulty, TimeLimit);
+    public DelegateCommand OnCreateCommand { get; }
+    public DelegateCommand OnCancelCommand { get; }
     public ObservableCollection<string> Difficulties { get; } =
     new ObservableCollection<string> { "Easy", "Medium", "Hard" };
+
+    private bool CanOnCreate(object? arg)
+    {
+        return true;
+    }
+    private void OnCreate(object? obj)
+    {
+        _mainWindowViewModel.CreateNewPack(NewPack);
+        RequestClose?.Invoke(this, new RequestCloseEventArgs(true));
+    }
+    private bool CanOnCancel(object? arg)
+    {
+        return true;
+    }
+    private void OnCancel(object? obj)
+    {
+        RequestClose?.Invoke(this, new RequestCloseEventArgs(false));
+    }
+
 }

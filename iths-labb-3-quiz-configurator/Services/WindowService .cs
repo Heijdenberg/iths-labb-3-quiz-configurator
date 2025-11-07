@@ -18,6 +18,19 @@ class WindowService : IWindowServices
             DataContext = viewModel,
             Owner = Application.Current.MainWindow
         };
+
+        if (viewModel is IRequestClose requestClose)
+        {
+            EventHandler<RequestCloseEventArgs>? handler = null;
+            handler = (sender, e) =>
+            {
+                requestClose.RequestClose -= handler;
+                window.DialogResult = e.DialogResult;
+                window.Close();
+            };
+            requestClose.RequestClose += handler;
+        }
+
         return window.ShowDialog();
     }
 

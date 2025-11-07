@@ -1,6 +1,6 @@
 ﻿namespace iths_labb_3_quiz_configurator.Models;
 
-internal class Question
+public class Question
 {
     public Question(string query, string correctAnswer,
         string incorrectAnswer1, string incorrectAnswer2, string incorrectAnswer3)

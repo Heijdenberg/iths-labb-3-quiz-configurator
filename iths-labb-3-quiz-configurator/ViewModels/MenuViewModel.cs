@@ -15,11 +15,13 @@ class MenuViewModel
     {
         _mainWindowViewModel = mainWindowViewModel;
         OpenNewPackDialogCommand = new DelegateCommand(_mainWindowViewModel.OpenNewPack, _mainWindowViewModel.CanOpenNewPack);
+        OpenImportPackDialogCommand = new DelegateCommand(_mainWindowViewModel.OpenImportPack, _mainWindowViewModel.CanOpenImportPack);
         CahngeActivePackCommand = new DelegateCommand(CahngeActivePack, CanCahngeActivePack);
         ShowPlayerCommand = new DelegateCommand(_mainWindowViewModel.ShowPlayer, _mainWindowViewModel.CanShowPlayer);
         ShowConfigurationCommand = new DelegateCommand(_mainWindowViewModel.ShowConfiguration, _mainWindowViewModel.CanShowConfiguration);
     }
     public DelegateCommand OpenNewPackDialogCommand { get; }
+    public DelegateCommand OpenImportPackDialogCommand { get; }
     public DelegateCommand ShowPlayerCommand {  get; }
     public DelegateCommand ShowConfigurationCommand {  get; }
     public DelegateCommand CahngeActivePackCommand { get; }

@@ -63,6 +63,16 @@ namespace iths_labb_3_quiz_configurator.ViewModels
             NewPackViewModel newPackViewModel = new NewPackViewModel(this);
             _windowService.ShowDialog(newPackViewModel);
         }
+        public bool CanOpenImportPack(object? arg)
+        {
+            return true;
+        }
+        public void OpenImportPack(object? obj)
+        {
+            var apiService = new ApiService();
+            var ImportPackModel = new ImportPackViewModel(this, apiService);
+            _windowService.ShowDialog(ImportPackModel);
+        }
 
         public bool CanCreateNewPack(object? arg)
         {
@@ -70,9 +80,13 @@ namespace iths_labb_3_quiz_configurator.ViewModels
         }
         public void CreateNewPack(object? obj)
         {
-            var newPack = new QuestionPackViewModel(new QuestionPack("test"));
-            Packs.Add(newPack);
-            ActivePack = newPack;
+            if (obj is QuestionPack questionPack)
+            {
+                var newPack = new QuestionPackViewModel(questionPack);
+
+                Packs.Add(newPack);
+                ActivePack = newPack;
+            }
         }
         public bool CanShowPlayer(object? arg)
         {

@@ -6,7 +6,49 @@
              xmlns:local="clr-namespace:iths_labb_3_quiz_configurator.Views.DialogUserContols"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style TargetType="Label">
+                <Setter Property="FontWeight"
+                        Value="Bold" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Width"
+                        Value="50" />
+                <Setter Property="Margin"
+                        Value="10" />
+            </Style>
+        </StackPanel.Resources>
+        <Label Content="Category:" />
+        <ComboBox ItemsSource="{Binding Categories}"
+                  DisplayMemberPath="Name"
+                  SelectedItem="{Binding SelectedCategorie}" />
+        <Label Content="Difficulty:" />
+        <ComboBox SelectedItem="{Binding SelectedDifficulty}"
+                  ItemsSource="{Binding Difficultys}">
+        </ComboBox>
+        <DockPanel>
+            <Label DockPanel.Dock="Left"
+                   Content="Number Of Questions:" />
+            <Label FontWeight="Normal"
+                   DockPanel.Dock="Right"
+                   Content="{Binding NoOfQuestions}" />
+            <Label FontWeight="Normal"
+                   DockPanel.Dock="Left"
+                   Content="" />
+        </DockPanel>
+        <Slider Value="{Binding NoOfQuestions}"
+                Minimum="5"
+                IsSnapToTickEnabled="True"
+                TickFrequency="1"
+                TickPlacement="BottomRight"
+                Maximum="20" />
+        <StackPanel HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+            <Button Content="Cancel"
+                    Command="{Binding OnCancelCommand}"/>
+            <Button Content="Import"
+                    Command="{Binding GetPackCommand}" />
+        </StackPanel>
+    </StackPanel>
 </UserControl>

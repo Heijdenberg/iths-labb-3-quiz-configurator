@@ -33,6 +33,7 @@
                     <Separator />
                     <MenuItem Icon="📥"
                               Header="Import Questions"
+                              Command="{Binding OpenImportPackDialogCommand}"
                               InputGestureText="Alt+F4" />
                     <Separator />
                     <MenuItem Icon="❌"

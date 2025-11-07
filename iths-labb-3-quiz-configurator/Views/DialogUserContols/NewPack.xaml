@@ -45,9 +45,10 @@
                 TickPlacement="BottomRight"
                 Maximum="120" />
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Content="Cancel"/>
+            <Button Content="Cancel"
+                    Command="{Binding OnCancelCommand}"/>
             <Button Content="Create"
-                    Command="{Binding CreateNewPackCommand}"/>
+                    Command="{Binding OnCreateCommand}"/>
         </StackPanel>
     </StackPanel>
 </UserControl>
