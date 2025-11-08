@@ -16,8 +16,8 @@ class ConfigurationViewModel : ViewModelBase
     public ConfigurationViewModel(MainWindowViewModel? mainWindowViewModel)
     {
         _mainWindowViewModel = mainWindowViewModel;
-        RemoveQuestionCommand = new DelegateCommand(RemoveQuestion, CanRemoveQuestion);
-        AddQuestionCommand = new DelegateCommand(AddQuestion, CanAddQuestion);
+        RemoveQuestionCommand = new DelegateCommand(_mainWindowViewModel.RemoveQuestion, _mainWindowViewModel.CanRemoveQuestion);
+        AddQuestionCommand = new DelegateCommand(_mainWindowViewModel.AddQuestion, _mainWindowViewModel.CanAddQuestion);
         PackSettingsCommand = new DelegateCommand(_mainWindowViewModel.OpenPackSettings, _mainWindowViewModel.CanOpenPackSettings);
 
         _mainWindowViewModel.PropertyChanged += (s, e) =>
@@ -34,10 +34,10 @@ class ConfigurationViewModel : ViewModelBase
     public QuestionPackViewModel? ActivePack => _mainWindowViewModel.ActivePack;
     public QuestionViewModel? ActiveQuestion
     {
-        get => _activeQuestion;
+        get => _mainWindowViewModel.ActiveQuestion;
         set
         {
-            _activeQuestion = value;
+            _mainWindowViewModel.ActiveQuestion = value;
             RaisePropertyChanged();
             RemoveQuestionCommand.RaiseCanExecuteChanged();
         }
@@ -45,23 +45,4 @@ class ConfigurationViewModel : ViewModelBase
     public DelegateCommand RemoveQuestionCommand { get; }
     public DelegateCommand AddQuestionCommand { get; }
     public DelegateCommand PackSettingsCommand { get; }
-
-    private bool CanAddQuestion(object? arg)
-    {
-        return true;
-    }
-
-    private void AddQuestion(object? obj)
-    {
-        ActivePack.Questions.Add(new QuestionViewModel());
-    }
-    private bool CanRemoveQuestion(object? arg)
-    {
-        return ActiveQuestion != null;
-    }
-
-    private void RemoveQuestion(object? obj)
-    {
-        ActivePack.Questions.Remove(ActiveQuestion);
-    }
 }

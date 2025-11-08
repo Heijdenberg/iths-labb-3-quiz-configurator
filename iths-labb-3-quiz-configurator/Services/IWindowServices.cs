@@ -10,4 +10,5 @@ public interface IWindowServices
 {
     bool? ShowDialog(object viewModel);
     void ShowWindow(object viewModel);
+    void CloseApplication();
 }

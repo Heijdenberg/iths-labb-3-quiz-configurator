@@ -1,4 +1,5 @@
-﻿using iths_labb_3_quiz_configurator.Models;
+﻿using iths_labb_3_quiz_configurator.Command;
+using iths_labb_3_quiz_configurator.Models;
 using iths_labb_3_quiz_configurator.Services;
 using iths_labb_3_quiz_configurator.Views.DialogUserContols;
 using System;
@@ -6,114 +7,209 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Linq;
+using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
-namespace iths_labb_3_quiz_configurator.ViewModels
+namespace iths_labb_3_quiz_configurator.ViewModels;
+
+class MainWindowViewModel : ViewModelBase
 {
-    class MainWindowViewModel : ViewModelBase
+    public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
+
+	private QuestionPackViewModel _activePack;
+    private ViewModelBase _activeView;
+    private readonly IWindowServices _windowService;
+    private readonly IDataService _dataService;
+    private readonly DispatcherTimer _autoSaveTimer;
+    private QuestionViewModel? _activeQuestion;
+    private WindowState _windowState;
+
+
+    public MainWindowViewModel(IWindowServices windowService, IDataService dataService)
     {
-        public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
+        _windowService = windowService;
+        _dataService = dataService;
+        PlayerViewModel = new PlayerViewModel(this);
+        ConfigurationViewModel = new ConfigurationViewModel(this);
+        MenuViewModel = new MenuViewModel(this);
+        Packs = new ObservableCollection<QuestionPackViewModel>();
 
-		private QuestionPackViewModel _activePack;
-        private ViewModelBase _activeView;
-        private readonly IWindowServices _windowService;
-
-        public MainWindowViewModel(IWindowServices windowService)
+        _autoSaveTimer = new DispatcherTimer
         {
-            _windowService = windowService;
-            PlayerViewModel = new PlayerViewModel(this);
-            ConfigurationViewModel = new ConfigurationViewModel(this);
-            MenuViewModel = new MenuViewModel(this);
-            var pack = new QuestionPack("Mina frågor");
-            ActivePack = new QuestionPackViewModel(pack);
-            Packs.Add(ActivePack);
-            ActivePack.Questions.Add(new QuestionViewModel($"Vad är 1+1", "2", "3", "1", "4"));
-            ActivePack.Questions.Add(new QuestionViewModel($"Vad heter sveriges huvudstad?", "Stockholm", "Oslo", "London", "Göteborg"));
-            ActiveView = ConfigurationViewModel;
-        }
-        public QuestionPackViewModel ActivePack
-		{
-			get => _activePack;
-			set { 
-				_activePack = value;
-				RaisePropertyChanged();
-                PlayerViewModel?.RaisePropertyChanged(nameof(PlayerViewModel.ActivePack));
-			}
+            Interval = TimeSpan.FromSeconds(10)
+        };
+        _autoSaveTimer.Tick += async (_, _) => await SaveAsync();
+
+        ActiveView = ConfigurationViewModel;
+    }
+
+    public QuestionPackViewModel ActivePack
+	{
+		get => _activePack;
+		set { 
+			_activePack = value;
+			RaisePropertyChanged();
+        PlayerViewModel?.RaisePropertyChanged(nameof(PlayerViewModel.ActivePack));
 		}
-        public ViewModelBase ActiveView
+	}
+    public QuestionViewModel? ActiveQuestion
+    {
+        get => _activeQuestion;
+        set
         {
-            get => _activeView;
-            set
+            _activeQuestion = value;
+            RaisePropertyChanged();
+        }
+    }
+    public ViewModelBase ActiveView
+    {
+        get => _activeView;
+        set
+        {
+            _activeView = value;
+            RaisePropertyChanged();
+        }
+    }
+    public PlayerViewModel? PlayerViewModel { get; }
+    public ConfigurationViewModel? ConfigurationViewModel { get; }
+    public MenuViewModel? MenuViewModel { get; }
+    public WindowState WindowState
+    {
+        get => _windowState;
+        set
+        {
+            if (_windowState != value)
             {
-                _activeView = value;
+                _windowState = value;
                 RaisePropertyChanged();
             }
         }
-        public PlayerViewModel? PlayerViewModel { get; }
-        public ConfigurationViewModel? ConfigurationViewModel { get; }
-        public MenuViewModel? MenuViewModel { get; }
+    }
 
-        public bool CanOpenNewPack(object? arg)
+    public bool CanOpenNewPack(object? arg)
+    {
+        return true;
+    }
+    public void OpenNewPack(object? obj)
+    {
+        NewPackViewModel newPackViewModel = new NewPackViewModel(this);
+        _windowService.ShowDialog(newPackViewModel);
+    }
+    public bool CanOpenImportPack(object? arg)
+    {
+        return true;
+    }
+    public void OpenImportPack(object? obj)
+    {
+        var apiService = new ApiService();
+        var ImportPackViewModel = new ImportPackViewModel(this, apiService);
+        _windowService.ShowDialog(ImportPackViewModel);
+    }
+
+    public bool CanOpenPackSettings(object? arg)
+    {
+        return true;
+    }
+    public void OpenPackSettings(object? obj)
+    {
+        var PackSettingsViewModel = new PackSettingsViewModel(ActivePack);
+        _windowService.ShowDialog(PackSettingsViewModel);
+    }
+
+    public bool CanCreateNewPack(object? arg)
+    {
+        return true;
+    }
+    public void CreateNewPack(object? obj)
+    {
+        if (obj is QuestionPack questionPack)
         {
-            return true;
+            var newPack = new QuestionPackViewModel(questionPack);
+
+            Packs.Add(newPack);
+            ActivePack = newPack;
         }
-        public void OpenNewPack(object? obj)
+    }
+
+    public bool CanShowPlayer(object? arg)
+    {
+        return true; 
+    }
+    public void ShowPlayer(object? obj)
+    {
+        if (PlayerViewModel != null) ActiveView = PlayerViewModel;
+    }
+    public bool CanShowConfiguration(object? arg)
+    {
+        return true;
+    }
+    public void ShowConfiguration(object? obj)
+    {
+        if (ConfigurationViewModel != null) ActiveView = ConfigurationViewModel;
+    }
+    public async Task InitializeAsync()
+    {
+        var packs = await _dataService.LoadPacksAsync();
+
+        Packs.Clear();
+        foreach (var p in packs)
         {
-            NewPackViewModel newPackViewModel = new NewPackViewModel(this);
-            _windowService.ShowDialog(newPackViewModel);
-        }
-        public bool CanOpenImportPack(object? arg)
-        {
-            return true;
-        }
-        public void OpenImportPack(object? obj)
-        {
-            var apiService = new ApiService();
-            var ImportPackViewModel = new ImportPackViewModel(this, apiService);
-            _windowService.ShowDialog(ImportPackViewModel);
+            Packs.Add(new QuestionPackViewModel(p));
         }
 
-        public bool CanOpenPackSettings(object? arg)
-        {
-            return true;
-        }
-        public void OpenPackSettings(object? obj)
-        {
-            var PackSettingsViewModel = new PackSettingsViewModel(ActivePack);
-            _windowService.ShowDialog(PackSettingsViewModel);
-        }
+        ActivePack = Packs.FirstOrDefault();
+        _autoSaveTimer.Start();
+    }
 
-        public bool CanCreateNewPack(object? arg)
-        {
-            return true;
-        }
-        public void CreateNewPack(object? obj)
-        {
-            if (obj is QuestionPack questionPack)
-            {
-                var newPack = new QuestionPackViewModel(questionPack);
+    public async Task SaveAsync()
+    {
+        if (Packs.Count == 0)
+            return;
 
-                Packs.Add(newPack);
-                ActivePack = newPack;
-            }
-        }
-        public bool CanShowPlayer(object? arg)
+        try
         {
-            return true; 
+            var packsToSave = Packs.Select(p => p.Model).ToList();
+            await _dataService.SavePacksAsync(packsToSave);
         }
-        public void ShowPlayer(object? obj)
+        catch (Exception ex)
         {
-            if (PlayerViewModel != null) ActiveView = PlayerViewModel;
+            //TODO: Add massage service
         }
-        public bool CanShowConfiguration(object? arg)
-        {
-            return true;
-        }
-        public void ShowConfiguration(object? obj)
-        {
-            if (ConfigurationViewModel != null) ActiveView = ConfigurationViewModel;
-        }
+    }
+
+    public bool CanRemoveQuestion(object? arg)
+    {
+        return ActiveQuestion != null;
+    }
+    public void RemoveQuestion(object? obj)
+    {
+        ActivePack.Questions.Remove(ActiveQuestion);
+    }
+    public bool CanAddQuestion(object? arg)
+    {
+        return true;
+    }
+
+    public void AddQuestion(object? obj)
+    {
+        ActivePack.Questions.Add(new QuestionViewModel());
+    }
+    public bool CanExit(object? arg)
+    {
+        return true;
+    }
+    public void Exit(object? obj)
+    {
+        _windowService.CloseApplication();
+    }
+    public void ToggleMaximize()
+    {
+        WindowState = WindowState == WindowState.Maximized
+            ? WindowState.Normal
+            : WindowState.Maximized;
     }
 }

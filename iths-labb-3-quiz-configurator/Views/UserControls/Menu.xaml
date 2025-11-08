@@ -13,6 +13,9 @@
                     <MenuItem Icon="➕"
                               Command="{Binding OpenNewPackDialogCommand}"
                               Header="New Question Pack" />
+                    <MenuItem Icon="💾"
+                              Command="{Binding SaveCommand}"
+                              Header="Save Packs" />
                     <MenuItem Icon="📚"
                               ItemsSource="{Binding Packs}"
                               Header="Select Question Pack">
@@ -29,7 +32,7 @@
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
                     <MenuItem Icon="➖"
-                              Header="Delete Question Pack" />
+                              Header="Delete Question Pack"/>
                     <Separator />
                     <MenuItem Icon="📥"
                               Header="Import Questions"
@@ -38,18 +41,22 @@
                     <Separator />
                     <MenuItem Icon="❌"
                               Header="Exit"
-                              InputGestureText="Ctrl+I" />
+                              InputGestureText="Ctrl+I"
+                              Command="{Binding ExitCommand}" />
                 </MenuItem>
                 <MenuItem Header="_Edit">
                     <MenuItem Icon="➕"
                               Header="Add Question"
-                              InputGestureText="Insert" />
+                              InputGestureText="Insert"
+                              Command="{Binding AddQuestionCommand}" />
                     <MenuItem Icon="➖"
                               Header="Remove Question"
-                              InputGestureText="DEL" />
+                              InputGestureText="DEL"
+                              Command="{Binding RemoveQuestionCommand}" />
                     <MenuItem Icon="⚙️"
                               Header="Pack Options"
-                              InputGestureText="Ctrl+O" />
+                              InputGestureText="Ctrl+O"
+                              Command="{Binding PackSettingsCommand}" />
                 </MenuItem>
                 <MenuItem Header="_View">
                     <MenuItem Icon="⏵"
@@ -63,7 +70,8 @@
                     <Separator />
                     <MenuItem Icon="⛶"
                               Header="Fillscreen"
-                              InputGestureText="Ctrl+Enter" />
+                              InputGestureText="Ctrl+Enter"
+                              Command="{Binding ToggleMaximizeCommand}"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

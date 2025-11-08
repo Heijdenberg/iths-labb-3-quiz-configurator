@@ -11,6 +11,11 @@ namespace iths_labb_3_quiz_configurator.Services;
 
 class WindowService : IWindowServices
 {
+    public void CloseApplication()
+    {
+        Application.Current.Shutdown();
+    }
+
     public bool? ShowDialog(object viewModel)
     {
         var window = new Dialog

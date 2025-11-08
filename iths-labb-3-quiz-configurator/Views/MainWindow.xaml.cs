@@ -18,11 +18,39 @@ namespace iths_labb_3_quiz_configurator.Views;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private bool _isClosingAfterSave;
+    
     public MainWindow()
     {
         InitializeComponent();
+        _isClosingAfterSave = false;
         var windowService = new WindowService();
-        DataContext = new MainWindowViewModel(windowService);
+        var jsonDataService = new JsonDataService();
+        var viewModel = new MainWindowViewModel(windowService, jsonDataService);
+        DataContext = viewModel;
+        Loaded += async (_, _) => await viewModel.InitializeAsync();
 
+        Closing += async (_, e) =>
+        {
+            if (_isClosingAfterSave)
+                return;
+
+            if (DataContext is MainWindowViewModel vm)
+            {
+                e.Cancel = true;
+
+                try
+                {
+                    await vm.SaveAsync();
+                }
+                catch
+                {
+                    // TODO: tom tills vidare
+                }
+
+                _isClosingAfterSave = true;
+                Close();
+            }
+        };
     }
 }

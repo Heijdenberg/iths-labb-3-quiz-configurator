@@ -15,6 +15,8 @@ internal class QuestionPackViewModel : ViewModelBase
         Questions.CollectionChanged += Questions_CollectionChanged;
     }
 
+    public QuestionPack Model { get => _model; }
+
     private void Questions_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems != null)
