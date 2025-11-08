@@ -53,7 +53,6 @@ class MainWindowViewModel : ViewModelBase
 		set { 
 			_activePack = value;
 			RaisePropertyChanged();
-        PlayerViewModel?.RaisePropertyChanged(nameof(PlayerViewModel.ActivePack));
 		}
 	}
     public QuestionViewModel? ActiveQuestion

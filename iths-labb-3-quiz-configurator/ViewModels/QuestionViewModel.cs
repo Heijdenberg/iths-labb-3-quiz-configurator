@@ -29,7 +29,7 @@ class QuestionViewModel : ViewModelBase
     }
 
     public Question Question => _question;
-    
+
     public string Query
     {
         get => _question.Query;
