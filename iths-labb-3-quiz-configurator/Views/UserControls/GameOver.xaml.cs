@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace iths_labb_3_quiz_configurator.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for QuizPlayView.xaml
+    /// Interaction logic for GameOver.xaml
     /// </summary>
-    public partial class QuizPlayView : UserControl
+    public partial class GameOver : UserControl
     {
-        public QuizPlayView()
+        public GameOver()
         {
             InitializeComponent();
         }

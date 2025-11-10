@@ -33,7 +33,6 @@ class MainWindowViewModel : ViewModelBase
     {
         _windowService = windowService;
         _dataService = dataService;
-        PlayerViewModel = new PlayerViewModel(this);
         ConfigurationViewModel = new ConfigurationViewModel(this);
         MenuViewModel = new MenuViewModel(this);
         Packs = new ObservableCollection<QuestionPackViewModel>();
@@ -53,7 +52,7 @@ class MainWindowViewModel : ViewModelBase
 		set { 
 			_activePack = value;
 			RaisePropertyChanged();
-		}
+        }
 	}
     public QuestionViewModel? ActiveQuestion
     {
@@ -69,11 +68,12 @@ class MainWindowViewModel : ViewModelBase
         get => _activeView;
         set
         {
+            if(_activeView is PlayerViewModel oldVm) { oldVm.StopGame(); }
             _activeView = value;
             RaisePropertyChanged();
         }
     }
-    public PlayerViewModel? PlayerViewModel { get; }
+    public PlayerViewModel? PlayerViewModel { get; set; }
     public ConfigurationViewModel? ConfigurationViewModel { get; }
     public MenuViewModel? MenuViewModel { get; }
     public WindowState WindowState
@@ -136,11 +136,13 @@ class MainWindowViewModel : ViewModelBase
 
     public bool CanShowPlayer(object? arg)
     {
-        return true; 
+        return ActivePack != null; 
     }
     public void ShowPlayer(object? obj)
     {
+        PlayerViewModel = new PlayerViewModel(this);
         if (PlayerViewModel != null) ActiveView = PlayerViewModel;
+        PlayerViewModel.StartGameLoop();
     }
     public bool CanShowConfiguration(object? arg)
     {

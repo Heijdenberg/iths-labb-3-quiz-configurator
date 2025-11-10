@@ -69,10 +69,15 @@ class MenuViewModel: ViewModelBase
     }
     private void MainOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(MainWindowViewModel.ActiveQuestion) ||
-            e.PropertyName == nameof(MainWindowViewModel.ActivePack))
+        if (e.PropertyName == nameof(MainWindowViewModel.ActiveQuestion))
         {
             RemoveQuestionCommand.RaiseCanExecuteChanged();
+        }
+
+        if (e.PropertyName == nameof(MainWindowViewModel.ActivePack))
+        {
+            RemoveQuestionCommand.RaiseCanExecuteChanged();
+            ShowPlayerCommand.RaiseCanExecuteChanged();
         }
     }
 }
