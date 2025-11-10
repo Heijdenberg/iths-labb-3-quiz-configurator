@@ -19,6 +19,7 @@ class PlayerViewModel : ViewModelBase
     private DispatcherTimer _timer;
     private int _currentTime;
     int _numberOfQuestions;
+    int _numberOfCorrectAnswers;
     int _index;
     private string _query;
     private Alternative _correctAlt;
@@ -43,8 +44,7 @@ class PlayerViewModel : ViewModelBase
         _timer.Interval = TimeSpan.FromSeconds(1);
         _timer.Tick += OnTimerTick;
         _index = 0;
-
-        
+        _numberOfCorrectAnswers = 0;
 
         MakeAGuessCommand = new DelegateCommand(MakeAGuess, CanMakeAGuess);
     }
@@ -119,6 +119,7 @@ class PlayerViewModel : ViewModelBase
 
     public void StartGameLoop()
     {
+        Shuffle(_activePack.Questions);
         GameLoop();
     }
 
@@ -155,7 +156,8 @@ class PlayerViewModel : ViewModelBase
             Brush wrongColor = Brushes.Red;
             if (alt == _correctAlt)
             {
-                
+                _numberOfCorrectAnswers++;
+
                 if (Alt1 == _correctAlt) Alt1.Bg = correctColor;
                 if (Alt2 == _correctAlt) Alt2.Bg = correctColor;
                 if (Alt3 == _correctAlt) Alt3.Bg = correctColor;
@@ -225,7 +227,7 @@ class PlayerViewModel : ViewModelBase
         RaisePropertyChanged();
     }
 
-    public void Shuffle(ObservableCollection<Alternative> collection)
+    public void Shuffle<T>(ObservableCollection<T> collection)
     {
         var shuffled = collection.OrderBy(_ => _rng.Next()).ToList();
         collection.Clear();
@@ -234,7 +236,8 @@ class PlayerViewModel : ViewModelBase
     }
     private void GameOver()
     {
-        ViewModelBase gameOverView = new GameOverViewModel();
+        ViewModelBase gameOverView = new GameOverViewModel(_numberOfQuestions,
+        _numberOfCorrectAnswers);
 
         _mainWindowViewModel.ActivePack = null;
         _mainWindowViewModel.ActiveView = gameOverView;

@@ -49,8 +49,12 @@ class MainWindowViewModel : ViewModelBase
     public QuestionPackViewModel ActivePack
 	{
 		get => _activePack;
-		set { 
-			_activePack = value;
+		set {
+            if (ActiveView != ConfigurationViewModel)
+            {
+                ShowConfiguration();
+            }
+            _activePack = value;
 			RaisePropertyChanged();
         }
 	}
@@ -68,7 +72,7 @@ class MainWindowViewModel : ViewModelBase
         get => _activeView;
         set
         {
-            if(_activeView is PlayerViewModel oldVm) { oldVm.StopGame(); }
+            if(_activeView is PlayerViewModel player) { player.StopGame(); }
             _activeView = value;
             RaisePropertyChanged();
         }
@@ -151,6 +155,10 @@ class MainWindowViewModel : ViewModelBase
     public void ShowConfiguration(object? obj)
     {
         if (ConfigurationViewModel != null) ActiveView = ConfigurationViewModel;
+    }
+    public void ShowConfiguration()
+    {
+        ShowConfiguration(null);
     }
     public async Task InitializeAsync()
     {

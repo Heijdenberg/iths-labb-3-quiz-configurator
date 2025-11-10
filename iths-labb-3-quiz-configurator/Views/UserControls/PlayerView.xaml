@@ -6,21 +6,22 @@
              xmlns:local="clr-namespace:iths_labb_3_quiz_configurator.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="25" />
+            <ColumnDefinition Width="50" />
             <ColumnDefinition Width="250" />
             <ColumnDefinition Width="250" />
-            <ColumnDefinition Width="25" />
+            <ColumnDefinition Width="50" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -52,7 +53,7 @@
                 <Setter Property="BorderThickness"
                         Value="0.5" />
                 <Setter Property="FontSize"
-                        Value="20" />
+                        Value="16" />
                 <Setter Property="FontWeight"
                         Value="Normal" />
 
@@ -79,40 +80,56 @@
             </Style>
 
         </Grid.Resources>
+        
         <TextBlock Grid.Column="2"
                    Grid.ColumnSpan="2"
+                   Grid.Row="1"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   FontSize="16"
                    TextWrapping="Wrap"
                    Text="{Binding Query}" />
+        
         <Label Grid.Column="2"
-               Grid.Row="1"
+               Grid.Row="2"
+               Grid.ColumnSpan="2"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
                Content="{Binding QuestionOfTotal}" />
-        <Label Grid.Column="3"
+        
+        <Label Grid.Column="4"
                Grid.Row="1"
+               FontSize="16"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
                Content="{Binding CurrentTime}" />
+        
         <Button Grid.Column="2"
-                Grid.Row="2"
+                Grid.Row="3"
                 Content="{Binding Alt1.Alt}"
                 Background="{Binding Alt1.Bg}"
                 Command="{Binding MakeAGuessCommand}"
                 CommandParameter="{Binding Alt1}"/>
+        
         <Button Grid.Column="3"
-                Grid.Row="2"
+                Grid.Row="3"
                 Content="{Binding Alt2.Alt}"
                 Background="{Binding Alt2.Bg}"
                 Command="{Binding MakeAGuessCommand}"
                 CommandParameter="{Binding Alt2}"/>
+        
         <Button Grid.Column="2"
-                Grid.Row="3"
+                Grid.Row="4"
                 Content="{Binding Alt3.Alt}"
                 Background="{Binding Alt3.Bg}"
                 Command="{Binding MakeAGuessCommand}"
                 CommandParameter="{Binding Alt3}"/>
+
         <Button Grid.Column="3"
-                Grid.Row="3"
+                Grid.Row="4"
                 Content="{Binding Alt4.Alt}"
                 Background="{Binding Alt4.Bg}"
                 Command="{Binding MakeAGuessCommand}"
                 CommandParameter="{Binding Alt4}" />
-
     </Grid>
 </UserControl>

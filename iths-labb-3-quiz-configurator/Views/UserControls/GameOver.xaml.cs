@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace iths_labb_3_quiz_configurator.Views.UserControls
+namespace iths_labb_3_quiz_configurator.Views.UserControls;
+
+/// <summary>
+/// Interaction logic for GameOver.xaml
+/// </summary>
+public partial class GameOver : UserControl
 {
-    /// <summary>
-    /// Interaction logic for GameOver.xaml
-    /// </summary>
-    public partial class GameOver : UserControl
+    public GameOver()
     {
-        public GameOver()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
