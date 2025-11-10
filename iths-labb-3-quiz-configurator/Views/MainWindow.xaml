@@ -14,9 +14,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <ContentControl Content="{Binding MenuViewModel}" />
+        <ContentControl Grid.Row="0"
+                        Content="{Binding MenuViewModel}" />
         <ContentControl Grid.Row="1"
                         Content="{Binding ActiveView}" />
+        <StatusBar Grid.Row="2"
+                   VerticalAlignment="Bottom">
+            <StatusBarItem Content="User: Admin" />
+        </StatusBar>
     </Grid>
 </Window>

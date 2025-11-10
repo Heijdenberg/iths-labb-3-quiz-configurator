@@ -41,16 +41,17 @@
                 <Label />
             </DockPanel>
             <ListBox Grid.Row="1" ItemsSource="{Binding ActivePack.Questions}"
-                     Margin="0 0 0 5"
+                     Margin="5 0 0 5"
                      DisplayMemberPath="Query"
                      SelectedItem="{Binding ActiveQuestion}" />
         </Grid>
-        <StackPanel Grid.Column="1" Margin="20">
+        <StackPanel Grid.Column="1"
+                    Margin="20">
             <Label Content="Question:" />
             <TextBox Text="{Binding ActiveQuestion.Query, UpdateSourceTrigger=PropertyChanged}"
                      Margin="0 0 0 20"
                      MinLines="5"
-                     TextWrapping="Wrap"/>
+                     TextWrapping="Wrap" />
             <Label Content="Corrext Answer:" />
             <TextBox Text="{Binding ActiveQuestion.CorrectAnswer, UpdateSourceTrigger=PropertyChanged}" />
             <Label Content="First Incorrect Answer:" />
