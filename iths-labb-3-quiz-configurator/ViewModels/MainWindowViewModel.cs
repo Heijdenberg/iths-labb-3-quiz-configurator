@@ -59,6 +59,7 @@ class MainWindowViewModel : ViewModelBase
             }
             _activePack = value;
 			RaisePropertyChanged();
+            UserMessage =  $"Pack {ActivePack.Name} Selected";
         }
 	}
     public QuestionViewModel? ActiveQuestion
@@ -150,6 +151,8 @@ class MainWindowViewModel : ViewModelBase
 
             Packs.Add(newPack);
             ActivePack = newPack;
+
+            UserMessage = "New Pack Crated";
         }
     }
 
@@ -202,7 +205,15 @@ class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            UserMessage = $"Fel vid sparning: {ex.Message}";
+            string msg = $"Save Failed: {ex.Message}";
+
+            _windowService.ShowMessage(
+                msg,
+                "Save failed",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+
+            UserMessage = $"Save Failed!";
         }
     }
 
@@ -213,6 +224,7 @@ class MainWindowViewModel : ViewModelBase
     public void RemoveQuestion(object? obj)
     {
         ActivePack.Questions.Remove(ActiveQuestion);
+        UserMessage = "Question Removed!";
     }
 
     public bool CanRemoveQuestionPack(object? arg)
@@ -223,6 +235,8 @@ class MainWindowViewModel : ViewModelBase
     {
         Packs.Remove(ActivePack);
         ActivePack = Packs.FirstOrDefault();
+
+        UserMessage = "Remove Question Pack!";
     }
     public bool CanAddQuestion(object? arg)
     {
@@ -232,6 +246,7 @@ class MainWindowViewModel : ViewModelBase
     public void AddQuestion(object? obj)
     {
         ActivePack.Questions.Add(new QuestionViewModel());
+        UserMessage = "Question Added";
     }
     public bool CanExit(object? arg)
     {
