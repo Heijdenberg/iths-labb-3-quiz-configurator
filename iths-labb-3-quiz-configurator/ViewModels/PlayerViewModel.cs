@@ -28,10 +28,6 @@ class PlayerViewModel : ViewModelBase
     private Alternative _alt3;
     private Alternative _alt4;
     private string _questionOfTotal;
-    private Brush _buttonBg1;
-    private Brush _buttonBg2;
-    private Brush _buttonBg3;
-    private Brush _buttonBg4;
 
     public PlayerViewModel(MainWindowViewModel mainWindowViewModel)
     {
@@ -237,9 +233,8 @@ class PlayerViewModel : ViewModelBase
     private void GameOver()
     {
         ViewModelBase gameOverView = new GameOverViewModel(_numberOfQuestions,
-        _numberOfCorrectAnswers);
+        _numberOfCorrectAnswers, _mainWindowViewModel);
 
-        _mainWindowViewModel.ActivePack = null;
         _mainWindowViewModel.ActiveView = gameOverView;
     }
 

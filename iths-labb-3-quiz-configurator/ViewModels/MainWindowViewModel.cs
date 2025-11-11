@@ -59,7 +59,14 @@ class MainWindowViewModel : ViewModelBase
             }
             _activePack = value;
 			RaisePropertyChanged();
-            UserMessage =  $"Pack {ActivePack.Name} Selected";
+            if(ActivePack != null)
+            {
+                UserMessage = $"Pack {ActivePack.Name} Selected";
+            }
+            else
+            {
+                UserMessage = $"No Pack Selected";
+            }
         }
 	}
     public QuestionViewModel? ActiveQuestion

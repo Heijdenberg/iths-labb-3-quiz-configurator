@@ -23,6 +23,7 @@
         <TextBox Text="{Binding NewPackTitle}"/>
         <Label Content="Difficulty:" />
         <ComboBox SelectedItem="{Binding SelectedDifficulty}"
+                  SelectedIndex="0"
                   ItemsSource="{Binding Difficulties}">
         </ComboBox>
         <DockPanel>
