@@ -32,6 +32,7 @@
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
                     <MenuItem Icon="➖"
+                              Command="{Binding RemovePackCommand}"
                               Header="Delete Question Pack"/>
                     <Separator />
                     <MenuItem Icon="📥"

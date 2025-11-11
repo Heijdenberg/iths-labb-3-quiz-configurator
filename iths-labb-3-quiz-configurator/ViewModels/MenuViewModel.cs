@@ -20,12 +20,13 @@ class MenuViewModel: ViewModelBase
         CahngeActivePackCommand = new DelegateCommand(CahngeActivePack, CanCahngeActivePack);
         ShowPlayerCommand = new DelegateCommand(_mainWindowViewModel.ShowPlayer, _mainWindowViewModel.CanShowPlayer);
         ShowConfigurationCommand = new DelegateCommand(_mainWindowViewModel.ShowConfiguration, _mainWindowViewModel.CanShowConfiguration);
-        SaveCommand = new AsyncDelegateCommand(_mainWindowViewModel.SaveAsync, () => true);
+        SaveCommand = new AsyncDelegateCommand(() =>_mainWindowViewModel.SaveAsync(), () => true);
         RemoveQuestionCommand = new DelegateCommand(_mainWindowViewModel.RemoveQuestion, _mainWindowViewModel.CanRemoveQuestion);
         AddQuestionCommand = new DelegateCommand(_mainWindowViewModel.AddQuestion, _mainWindowViewModel.CanAddQuestion);
         PackSettingsCommand = new DelegateCommand(_mainWindowViewModel.OpenPackSettings, _mainWindowViewModel.CanOpenPackSettings);
         ExitCommand = new DelegateCommand(_mainWindowViewModel.Exit, _mainWindowViewModel.CanExit);
         ToggleMaximizeCommand = new DelegateCommand(_ => _mainWindowViewModel.ToggleMaximize());
+        RemovePackCommand = new DelegateCommand(_mainWindowViewModel.RemoveQuestionPack, _mainWindowViewModel.CanRemoveQuestionPack);
 
         _mainWindowViewModel.PropertyChanged += MainOnPropertyChanged;
     }
@@ -41,6 +42,7 @@ class MenuViewModel: ViewModelBase
     public DelegateCommand PackSettingsCommand { get; }
     public DelegateCommand ExitCommand { get; }
     public DelegateCommand ToggleMaximizeCommand { get; }
+    public DelegateCommand RemovePackCommand { get; }
 
 
     public QuestionPackViewModel ActivePack
@@ -78,6 +80,7 @@ class MenuViewModel: ViewModelBase
         {
             RemoveQuestionCommand.RaiseCanExecuteChanged();
             ShowPlayerCommand.RaiseCanExecuteChanged();
+            RemovePackCommand.RaiseCanExecuteChanged();
         }
     }
 }

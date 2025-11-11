@@ -22,7 +22,7 @@
                         Content="{Binding ActiveView}" />
         <StatusBar Grid.Row="2"
                    VerticalAlignment="Bottom">
-            <StatusBarItem Content="User: Admin" />
+            <StatusBarItem Content="{Binding UserMessage}" />
         </StatusBar>
     </Grid>
 </Window>

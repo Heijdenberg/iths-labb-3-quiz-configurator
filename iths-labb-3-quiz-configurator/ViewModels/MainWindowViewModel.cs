@@ -2,6 +2,7 @@
 using iths_labb_3_quiz_configurator.Models;
 using iths_labb_3_quiz_configurator.Services;
 using iths_labb_3_quiz_configurator.Views.DialogUserContols;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,7 @@ class MainWindowViewModel : ViewModelBase
     private readonly DispatcherTimer _autoSaveTimer;
     private QuestionViewModel? _activeQuestion;
     private WindowState _windowState;
+    private string _userMessage;
 
 
     public MainWindowViewModel(IWindowServices windowService, IDataService dataService)
@@ -36,12 +38,13 @@ class MainWindowViewModel : ViewModelBase
         ConfigurationViewModel = new ConfigurationViewModel(this);
         MenuViewModel = new MenuViewModel(this);
         Packs = new ObservableCollection<QuestionPackViewModel>();
+        UserMessage = "Ready";
 
         _autoSaveTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromSeconds(10)
         };
-        _autoSaveTimer.Tick += async (_, _) => await SaveAsync();
+        _autoSaveTimer.Tick += async (_, _) => await SaveAsync("Auto Save Successful.");
 
         ActiveView = ConfigurationViewModel;
     }
@@ -77,6 +80,15 @@ class MainWindowViewModel : ViewModelBase
             RaisePropertyChanged();
         }
     }
+    public string UserMessage
+    {
+        get => _userMessage;
+        set
+        {
+            _userMessage = value;
+            RaisePropertyChanged();
+        }
+    }
     public PlayerViewModel? PlayerViewModel { get; set; }
     public ConfigurationViewModel? ConfigurationViewModel { get; }
     public MenuViewModel? MenuViewModel { get; }
@@ -108,8 +120,8 @@ class MainWindowViewModel : ViewModelBase
     }
     public void OpenImportPack(object? obj)
     {
-        var apiService = new ApiService();
-        var ImportPackViewModel = new ImportPackViewModel(this, apiService);
+        IApiService apiService = new ApiService();
+        var ImportPackViewModel = new ImportPackViewModel(this, apiService, _windowService);
         _windowService.ShowDialog(ImportPackViewModel);
     }
 
@@ -119,8 +131,11 @@ class MainWindowViewModel : ViewModelBase
     }
     public void OpenPackSettings(object? obj)
     {
-        var PackSettingsViewModel = new PackSettingsViewModel(ActivePack);
-        _windowService.ShowDialog(PackSettingsViewModel);
+        PackSettingsViewModel PackSettingsViewModel = new PackSettingsViewModel(ActivePack);
+        string name = PackSettingsViewModel.Name;
+        bool? result = _windowService.ShowDialog(PackSettingsViewModel);
+
+        UserMessage = $"Settings for {name} where uppdated";
     }
 
     public bool CanCreateNewPack(object? arg)
@@ -174,7 +189,7 @@ class MainWindowViewModel : ViewModelBase
         _autoSaveTimer.Start();
     }
 
-    public async Task SaveAsync()
+    public async Task SaveAsync(string message = "Save Successful.")
     {
         if (Packs.Count == 0)
             return;
@@ -183,6 +198,7 @@ class MainWindowViewModel : ViewModelBase
         {
             var packsToSave = Packs.Select(p => p.Model).ToList();
             await _dataService.SavePacksAsync(packsToSave);
+            UserMessage = message;
         }
         catch (Exception ex)
         {
@@ -197,6 +213,16 @@ class MainWindowViewModel : ViewModelBase
     public void RemoveQuestion(object? obj)
     {
         ActivePack.Questions.Remove(ActiveQuestion);
+    }
+
+    public bool CanRemoveQuestionPack(object? arg)
+    {
+        return ActivePack != null;
+    }
+    public void RemoveQuestionPack(object? obj)
+    {
+        Packs.Remove(ActivePack);
+        ActivePack = Packs.FirstOrDefault();
     }
     public bool CanAddQuestion(object? arg)
     {

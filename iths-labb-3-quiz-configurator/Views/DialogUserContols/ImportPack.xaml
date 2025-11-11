@@ -21,6 +21,7 @@
         </StackPanel.Resources>
         <Label Content="Category:" />
         <ComboBox ItemsSource="{Binding Categories}"
+                  SelectedIndex="0"
                   DisplayMemberPath="Name"
                   SelectedItem="{Binding SelectedCategorie}" />
         <Label Content="Difficulty:" />

@@ -11,10 +11,6 @@ namespace iths_labb_3_quiz_configurator.Services;
 
 class WindowService : IWindowServices
 {
-    public void CloseApplication()
-    {
-        Application.Current.Shutdown();
-    }
 
     public bool? ShowDialog(object viewModel)
     {
@@ -42,5 +38,17 @@ class WindowService : IWindowServices
     public void ShowWindow(object viewModel)
     {
         throw new NotImplementedException();
+    }
+
+    public void CloseApplication()
+    {
+        Application.Current.Shutdown();
+    }
+
+    public void ShowMessage(string message, string title,
+                        MessageBoxButton buttons,
+                        MessageBoxImage icon)
+    {
+        MessageBox.Show(message, title, buttons, icon);
     }
 }
