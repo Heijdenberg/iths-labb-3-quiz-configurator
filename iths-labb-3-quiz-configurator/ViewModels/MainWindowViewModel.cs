@@ -202,7 +202,7 @@ class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            //TODO: Add massage service
+            UserMessage = $"Fel vid sparning: {ex.Message}";
         }
     }
 
