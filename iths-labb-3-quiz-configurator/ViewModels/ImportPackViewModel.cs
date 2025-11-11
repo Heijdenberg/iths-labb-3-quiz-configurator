@@ -37,6 +37,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
         _apiService = apiService;
         _windowService = windowService;
 
+        Title = "Import Pack";
         NoOfQuestions = 1;
         categoryUrl = "api_category.php";
         GetCategories();
@@ -45,6 +46,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
         OnCancelCommand = new DelegateCommand(OnCancel, CanOnCancel);
     }
 
+    public string Title { get; }
     public Array Difficultys => Enum.GetValues(typeof(Difficulty));
     public Difficulty SelectedDifficulty
     {

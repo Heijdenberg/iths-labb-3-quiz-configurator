@@ -15,7 +15,10 @@ class PackSettingsViewModel : ViewModelBase
     public PackSettingsViewModel(QuestionPackViewModel pack)
     {
         _pack = pack;
+        Title = "Pack Settings";
     }
+
+    public string Title { get; }
 
     public string Name
     {
