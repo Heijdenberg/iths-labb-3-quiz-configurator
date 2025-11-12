@@ -112,6 +112,13 @@ class PlayerViewModel : ViewModelBase
     {
         if (_activePack is null) return;
 
+        if (_activePack.Questions.Count == 0)
+        {
+            _mainWindowViewModel.UserMessage = "Cannot start game — this pack has no questions.";
+            _mainWindowViewModel.ActiveView = _mainWindowViewModel.ConfigurationViewModel;
+            return;
+        }
+
         _shuffledQuestions = new ObservableCollection < QuestionViewModel >(_activePack.Questions.ToList());
 
         Shuffle(_shuffledQuestions);
