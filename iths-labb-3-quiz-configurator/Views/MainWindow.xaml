@@ -11,6 +11,34 @@
         WindowState="{Binding WindowState}"
         Height="450"
         Width="800">
+    <Window.InputBindings>
+        <KeyBinding Key="Insert"
+                    Command="{Binding MenuViewModel.AddQuestionCommand}" />
+        <KeyBinding Key="Delete"
+                    Command="{Binding MenuViewModel.RemoveQuestionCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="O"
+                    Command="{Binding MenuViewModel.PackSettingsCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="P"
+                    Command="{Binding MenuViewModel.ShowPlayerCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="E"
+                    Command="{Binding MenuViewModel.ShowConfigurationCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="S"
+                    Command="{Binding MenuViewModel.SaveCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="N"
+                    Command="{Binding MenuViewModel.OpenNewPackDialogCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="I"
+                    Command="{Binding MenuViewModel.OpenImportPackDialogCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="Enter"
+                    Command="{Binding MenuViewModel.ToggleMaximizeCommand}" />
+    </Window.InputBindings>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />

@@ -13,13 +13,13 @@
                 <MenuItem Header="_File">
                     <MenuItem Icon="➕"
                               Command="{Binding OpenNewPackDialogCommand}"
-                              Header="New Question Pack" />
+                              Header="_New Question Pack" />
                     <MenuItem Icon="💾"
                               Command="{Binding SaveCommand}"
-                              Header="Save Packs" />
+                              Header="_Save Packs" />
                     <MenuItem Icon="📚"
                               ItemsSource="{Binding Packs}"
-                              Header="Select Question Pack">
+                              Header="Se_lect Question Pack">
                         <MenuItem.ItemContainerStyle>
                             <Style TargetType="MenuItem">
                                 <Setter Property="Header"
@@ -34,44 +34,44 @@
                     </MenuItem>
                     <MenuItem Icon="➖"
                               Command="{Binding RemovePackCommand}"
-                              Header="Delete Question Pack" />
+                              Header="_Delete Question Pack" />
                     <Separator />
                     <MenuItem Icon="📥"
-                              Header="Import Questions"
+                              Header="_Import Questions"
                               Command="{Binding OpenImportPackDialogCommand}"
                               InputGestureText="Alt+F4" />
                     <Separator />
                     <MenuItem Icon="❌"
-                              Header="Exit"
+                              Header="E_xit"
                               InputGestureText="Ctrl+I"
                               Command="{Binding ExitCommand}" />
                 </MenuItem>
                 <MenuItem Header="_Edit">
                     <MenuItem Icon="➕"
-                              Header="Add Question"
+                              Header="_Add Question"
                               InputGestureText="Insert"
                               Command="{Binding AddQuestionCommand}" />
                     <MenuItem Icon="➖"
-                              Header="Remove Question"
+                              Header="_Remove Question"
                               InputGestureText="DEL"
                               Command="{Binding RemoveQuestionCommand}" />
                     <MenuItem Icon="⚙️"
-                              Header="Pack Options"
+                              Header="Pack _Options"
                               InputGestureText="Ctrl+O"
                               Command="{Binding PackSettingsCommand}" />
                 </MenuItem>
                 <MenuItem Header="_View">
                     <MenuItem Icon="⏵"
-                              Header="Play"
+                              Header="_Play"
                               Command="{Binding ShowPlayerCommand}"
                               InputGestureText="Ctrl+P" />
                     <MenuItem Icon="📝"
-                              Header="Edit"
+                              Header="_Edit"
                               Command="{Binding ShowConfigurationCommand}"
                               InputGestureText="Ctrl+E" />
                     <Separator />
                     <MenuItem Icon="⛶"
-                              Header="Fillscreen"
+                              Header="_Fullscreen"
                               InputGestureText="Ctrl+Enter"
                               Command="{Binding ToggleMaximizeCommand}" />
                 </MenuItem>
