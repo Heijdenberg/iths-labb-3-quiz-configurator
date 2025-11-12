@@ -29,11 +29,6 @@ class WindowService : IWindowServices
         return window.ShowDialog();
     }
 
-    public void ShowWindow(object viewModel)
-    {
-        throw new NotImplementedException();
-    }
-
     public void CloseApplication()
     {
         Application.Current.Shutdown();
@@ -44,5 +39,16 @@ class WindowService : IWindowServices
                         MessageBoxImage icon)
     {
         MessageBox.Show(message, title, buttons, icon);
+    }
+
+    public bool Confirm(string message, string title)
+    {
+        var result = MessageBox.Show(
+            message,
+            title,
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question);
+
+        return result == MessageBoxResult.Yes;
     }
 }

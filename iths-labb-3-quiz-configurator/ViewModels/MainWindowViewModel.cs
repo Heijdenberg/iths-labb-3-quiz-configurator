@@ -242,10 +242,15 @@ class MainWindowViewModel : ViewModelBase
     {
         if (ActivePack is null) return;
 
+        QuestionPackViewModel pack = ActivePack;
+        bool ok = _windowService.Confirm($"Delete \"{pack.Name}\" and all its questions?", "Delete Question Pack");
+
+        if (!ok) return;
+
         Packs.Remove(ActivePack);
         ActivePack = Packs.FirstOrDefault();
 
-        UserMessage = "Remove Question Pack!";
+        UserMessage = "Removed Question Pack!";
     }
     public bool CanAddQuestion(object? arg)
     {

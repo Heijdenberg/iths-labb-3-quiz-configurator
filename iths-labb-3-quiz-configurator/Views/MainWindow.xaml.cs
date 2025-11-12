@@ -42,14 +42,25 @@ public partial class MainWindow : Window
                 try
                 {
                     await vm.SaveAsync();
+                    _isClosingAfterSave = true;
+                    Close();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // TODO: tom tills vidare
-                }
+                    string msg = $"Could not save before exit.\n\nDetails: {ex.Message}\n\nClose without saving?";
 
-                _isClosingAfterSave = true;
-                Close();
+                    var result = windowService.Confirm(msg, "Save failed");
+
+                    if (result)
+                    {
+                        _isClosingAfterSave = true;
+                        Close();
+                    }
+                    else
+                    {
+                        vm.UserMessage = "Close cancelled. Please try saving again.";
+                    }
+                }
             }
         };
     }
