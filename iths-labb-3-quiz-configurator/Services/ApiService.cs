@@ -27,7 +27,6 @@ public class ApiService : IApiService
     public string Decode(string s) => WebUtility.HtmlDecode(s);
     public ObservableCollection<Category> CategoriesFromJson(string json)
     {
-        ObservableCollection<string> strings = new();
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
@@ -35,12 +34,17 @@ public class ApiService : IApiService
 
         TriviaResponse? data = JsonSerializer.Deserialize<TriviaResponse>(json, options);
 
+        if (data?.Trivia_Categories is null)
+            return new ObservableCollection<Category>();
+
         foreach (var cat in data.Trivia_Categories)
         {
-            strings.Add($"{cat.Id}: {Decode(cat.Name)}");
+            cat.Name = Decode(cat.Name);
         }
+
         return data.Trivia_Categories;
     }
+
     public ObservableCollection<Question> QuestionsFromJson(string json)
     {
         ObservableCollection<Question> questions = new();
