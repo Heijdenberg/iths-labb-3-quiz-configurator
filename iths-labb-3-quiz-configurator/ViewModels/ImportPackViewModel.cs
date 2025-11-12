@@ -10,7 +10,7 @@ namespace iths_labb_3_quiz_configurator.ViewModels;
 
 class ImportPackViewModel : ViewModelBase, IRequestClose
 {
-    public event EventHandler<RequestCloseEventArgs> RequestClose;
+    public event EventHandler<RequestCloseEventArgs>? RequestClose;
     private readonly MainWindowViewModel _mainWindowViewModel;
     private readonly IApiService _apiService;
     private readonly IWindowServices _windowService;
