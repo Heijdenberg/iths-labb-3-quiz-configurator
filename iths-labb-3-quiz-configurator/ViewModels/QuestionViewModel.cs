@@ -38,8 +38,8 @@ class QuestionViewModel : ViewModelBase
         }
     }
     public string CorrectAnswer
-    { 
-        get => _question.CorrectAnswer; 
+    {
+        get => _question.CorrectAnswer;
         set
         {
             _question.CorrectAnswer = value;

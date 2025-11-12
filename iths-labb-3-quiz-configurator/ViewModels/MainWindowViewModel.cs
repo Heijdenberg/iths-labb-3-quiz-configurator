@@ -10,7 +10,7 @@ class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
 
-	private QuestionPackViewModel? _activePack;
+    private QuestionPackViewModel? _activePack;
     private ViewModelBase _activeView;
     private readonly IWindowServices _windowService;
     private readonly IDataService _dataService;
@@ -39,16 +39,17 @@ class MainWindowViewModel : ViewModelBase
     }
 
     public QuestionPackViewModel? ActivePack
-	{
-		get => _activePack;
-		set {
+    {
+        get => _activePack;
+        set
+        {
             if (ActiveView != ConfigurationViewModel)
             {
                 ShowConfiguration();
             }
             _activePack = value;
-			RaisePropertyChanged();
-            if(ActivePack != null)
+            RaisePropertyChanged();
+            if (ActivePack != null)
             {
                 UserMessage = $"Pack {ActivePack.Name} Selected";
             }
@@ -57,7 +58,7 @@ class MainWindowViewModel : ViewModelBase
                 UserMessage = $"No Pack Selected";
             }
         }
-	}
+    }
     public QuestionViewModel? ActiveQuestion
     {
         get => _activeQuestion;
@@ -72,7 +73,7 @@ class MainWindowViewModel : ViewModelBase
         get => _activeView;
         set
         {
-            if(_activeView is PlayerViewModel player) { player.StopGame(); }
+            if (_activeView is PlayerViewModel player) { player.StopGame(); }
             _activeView = value;
             RaisePropertyChanged();
         }
@@ -129,7 +130,7 @@ class MainWindowViewModel : ViewModelBase
     public void OpenPackSettings(object? obj)
     {
         if (ActivePack is null) return;
-        
+
         PackSettingsViewModel PackSettingsViewModel = new PackSettingsViewModel(ActivePack);
         string name = PackSettingsViewModel.Name;
         bool? result = _windowService.ShowDialog(PackSettingsViewModel);
@@ -156,7 +157,7 @@ class MainWindowViewModel : ViewModelBase
 
     public bool CanShowPlayer(object? arg)
     {
-        return ActivePack != null; 
+        return ActivePack != null;
     }
     public void ShowPlayer(object? obj)
     {
@@ -175,7 +176,7 @@ class MainWindowViewModel : ViewModelBase
     public void ShowConfiguration(object? obj)
     {
         if (ConfigurationViewModel is null) return;
-       
+
         ActiveView = ConfigurationViewModel;
     }
     public void ShowConfiguration()

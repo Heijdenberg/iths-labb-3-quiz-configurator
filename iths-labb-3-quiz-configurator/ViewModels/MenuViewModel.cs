@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace iths_labb_3_quiz_configurator.ViewModels;
 
-class MenuViewModel: ViewModelBase
+class MenuViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel? _mainWindowViewModel;
     public MenuViewModel(MainWindowViewModel mainWindowViewModel)
@@ -15,7 +15,7 @@ class MenuViewModel: ViewModelBase
         CahngeActivePackCommand = new DelegateCommand(CahngeActivePack, CanCahngeActivePack);
         ShowPlayerCommand = new DelegateCommand(_mainWindowViewModel.ShowPlayer, _mainWindowViewModel.CanShowPlayer);
         ShowConfigurationCommand = new DelegateCommand(_mainWindowViewModel.ShowConfiguration, _mainWindowViewModel.CanShowConfiguration);
-        SaveCommand = new AsyncDelegateCommand(() =>_mainWindowViewModel.SaveAsync(), () => true);
+        SaveCommand = new AsyncDelegateCommand(() => _mainWindowViewModel.SaveAsync(), () => true);
         RemoveQuestionCommand = new DelegateCommand(_mainWindowViewModel.RemoveQuestion, _mainWindowViewModel.CanRemoveQuestion);
         AddQuestionCommand = new DelegateCommand(_mainWindowViewModel.AddQuestion, _mainWindowViewModel.CanAddQuestion);
         PackSettingsCommand = new DelegateCommand(_mainWindowViewModel.OpenPackSettings, _mainWindowViewModel.CanOpenPackSettings);
@@ -27,8 +27,8 @@ class MenuViewModel: ViewModelBase
     }
     public DelegateCommand OpenNewPackDialogCommand { get; }
     public DelegateCommand OpenImportPackDialogCommand { get; }
-    public DelegateCommand ShowPlayerCommand {  get; }
-    public DelegateCommand ShowConfigurationCommand {  get; }
+    public DelegateCommand ShowPlayerCommand { get; }
+    public DelegateCommand ShowConfigurationCommand { get; }
     public DelegateCommand CahngeActivePackCommand { get; }
     public AsyncDelegateCommand SaveCommand { get; }
     public ObservableCollection<QuestionPackViewModel> Packs => _mainWindowViewModel.Packs;

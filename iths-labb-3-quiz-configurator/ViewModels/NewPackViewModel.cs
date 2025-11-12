@@ -27,7 +27,7 @@ class NewPackViewModel : ViewModelBase, IRequestClose
         OnCancelCommand = new DelegateCommand(OnCancel, CanOnCancel);
     }
     public string Title
-    { 
+    {
         get => _title;
         set => _title = value;
     }
@@ -44,8 +44,8 @@ class NewPackViewModel : ViewModelBase, IRequestClose
     public int TimeLimit
     {
         get => _timeLimit;
-        set 
-        { 
+        set
+        {
             _timeLimit = value;
             RaisePropertyChanged();
         }

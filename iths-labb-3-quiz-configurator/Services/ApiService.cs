@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace iths_labb_3_quiz_configurator.Services;
 
-public class ApiService: IApiService
+public class ApiService : IApiService
 {
     public async Task<ObservableCollection<T>> GetAsync<T>(HttpClient httpClient, string urlEnd, Func<string, ObservableCollection<T>> jsonFactory)
     {

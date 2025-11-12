@@ -19,7 +19,7 @@ namespace iths_labb_3_quiz_configurator.Views;
 public partial class MainWindow : Window
 {
     private bool _isClosingAfterSave;
-    
+
     public MainWindow()
     {
         InitializeComponent();

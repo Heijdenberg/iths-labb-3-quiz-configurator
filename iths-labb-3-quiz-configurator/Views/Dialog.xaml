@@ -10,5 +10,6 @@
         WindowStyle="ToolWindow"
         SizeToContent="Height"
         Width="200">
-    <UserControl Margin="10"  Content="{Binding}" />
+    <UserControl Margin="10"
+                 Content="{Binding}" />
 </Window>

@@ -11,7 +11,7 @@ internal class QuestionPackViewModel : ViewModelBase
     public QuestionPackViewModel(QuestionPack model)
     {
         _model = model;
-        Questions = new ObservableCollection<QuestionViewModel>( _model.Questions.Select(q => new QuestionViewModel(q)) );
+        Questions = new ObservableCollection<QuestionViewModel>(_model.Questions.Select(q => new QuestionViewModel(q)));
         Questions.CollectionChanged += Questions_CollectionChanged;
     }
 

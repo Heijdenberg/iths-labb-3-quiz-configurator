@@ -45,7 +45,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
     public Difficulty SelectedDifficulty
     {
         get => _selectedDifficulty;
-        set 
+        set
         {
             _selectedDifficulty = value;
             RaisePropertyChanged();
@@ -54,7 +54,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
     }
 
     public int NoOfQuestions
-    { 
+    {
         get => _noOfQuestions;
         set
         {
@@ -139,7 +139,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
     {
         bool canGetPack = false;
 
-        if(SelectedCategorie != null) canGetPack = true;
+        if (SelectedCategorie != null) canGetPack = true;
 
         return canGetPack;
     }
@@ -151,12 +151,12 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
             string questionsUrl = $"api.php?amount={_noOfQuestions}&category={SelectedCategorie.Id}&difficulty={diff}&type=multiple";
             ObservableCollection<Question> questions = await _apiService.GetAsync(sharedClient, questionsUrl, _apiService.QuestionsFromJson);
 
-            
+
 
             if (questions == null || questions.Count == 0)
             {
                 string msg = "Import failed: the trivia service returned no questions for the selected settings.";
-                
+
                 _windowService.ShowMessage(
                     msg,
                     "Import failed",

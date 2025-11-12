@@ -2,7 +2,7 @@
 
 namespace iths_labb_3_quiz_configurator.ViewModels;
 
-class GameOverViewModel: ViewModelBase
+class GameOverViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel _mainWindowViewModel;
 
@@ -13,7 +13,7 @@ class GameOverViewModel: ViewModelBase
         _mainWindowViewModel = mainWindowViewModel ?? throw new ArgumentNullException(nameof(mainWindowViewModel));
         _numberOfQuestions = numberOfQuestions;
         _numberOfCorrectAnswers = numberOfCorrectAnswers;
-        RestartCommand = new DelegateCommand(Restart,CanRestart);
+        RestartCommand = new DelegateCommand(Restart, CanRestart);
     }
 
     public string Result { get => $"You got {_numberOfCorrectAnswers} out of {_numberOfQuestions} answers correct!"; }
