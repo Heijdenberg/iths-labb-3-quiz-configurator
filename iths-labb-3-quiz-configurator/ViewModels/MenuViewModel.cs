@@ -9,7 +9,7 @@ class MenuViewModel : ViewModelBase
     private readonly MainWindowViewModel? _mainWindowViewModel;
     public MenuViewModel(MainWindowViewModel mainWindowViewModel)
     {
-        _mainWindowViewModel = mainWindowViewModel;
+        _mainWindowViewModel = mainWindowViewModel ?? throw new ArgumentNullException(nameof(mainWindowViewModel));
         OpenNewPackDialogCommand = new DelegateCommand(_mainWindowViewModel.OpenNewPack, _mainWindowViewModel.CanOpenNewPack);
         OpenImportPackDialogCommand = new DelegateCommand(_mainWindowViewModel.OpenImportPack, _mainWindowViewModel.CanOpenImportPack);
         CahngeActivePackCommand = new DelegateCommand(CahngeActivePack, CanCahngeActivePack);
@@ -60,7 +60,7 @@ class MenuViewModel : ViewModelBase
     {
         return true;
     }
-    public void CahngeActivePack(object obj)
+    public void CahngeActivePack(object? obj)
     {
         if (obj is QuestionPackViewModel pack) ActivePack = pack;
     }

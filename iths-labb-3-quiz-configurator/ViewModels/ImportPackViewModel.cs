@@ -23,12 +23,12 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
     private Difficulty _selectedDifficulty;
     public string categoryUrl;
     private ObservableCollection<Category> _categories = new();
-    private Category _selectedCategorie;
+    private Category? _selectedCategorie;
 
     public ImportPackViewModel(MainWindowViewModel mainWindowViewModel, IApiService apiService, IWindowServices windowService)
     {
         _mainWindowViewModel = mainWindowViewModel ?? throw new ArgumentNullException(nameof(mainWindowViewModel));
-        _apiService = apiService;
+        _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
         _windowService = windowService;
 
         Title = "Import Pack";
@@ -63,7 +63,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
         }
     }
 
-    public Category SelectedCategorie
+    public Category? SelectedCategorie
     {
         get => _selectedCategorie;
         set
@@ -135,14 +135,8 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
             RequestClose?.Invoke(this, new RequestCloseEventArgs(false));
         }
     }
-    public bool CanGetPack()
-    {
-        bool canGetPack = false;
+    public bool CanGetPack() => SelectedCategorie != null;
 
-        if (SelectedCategorie != null) canGetPack = true;
-
-        return canGetPack;
-    }
     public async Task GetPack()
     {
         try
