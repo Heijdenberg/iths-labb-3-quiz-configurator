@@ -22,7 +22,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
     private int _noOfQuestions;
     private Difficulty _selectedDifficulty;
     public string categoryUrl;
-    private ObservableCollection<Category> _categories;
+    private ObservableCollection<Category> _categories = new();
     private Category _selectedCategorie;
 
     public ImportPackViewModel(MainWindowViewModel mainWindowViewModel, IApiService apiService, IWindowServices windowService)
@@ -34,7 +34,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
         Title = "Import Pack";
         NoOfQuestions = 1;
         categoryUrl = "api_category.php";
-        GetCategories();
+        _ = GetCategories();
 
         GetPackCommand = new AsyncDelegateCommand(GetPack, CanGetPack);
         OnCancelCommand = new DelegateCommand(OnCancel, CanOnCancel);
