@@ -8,6 +8,11 @@ class Alternative
     private readonly string _alternative;
     private Brush _bgColor;
 
+    public Alternative()
+    {
+        _alternative = "";
+        _bgColor = Brushes.Transparent;
+    }
     public Alternative(string alternative)
     {
         _alternative = alternative;

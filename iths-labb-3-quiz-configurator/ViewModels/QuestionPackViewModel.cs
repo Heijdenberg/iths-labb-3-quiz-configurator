@@ -10,7 +10,7 @@ internal class QuestionPackViewModel : ViewModelBase
 
     public QuestionPackViewModel(QuestionPack model)
     {
-        _model = model;
+        _model = model ?? throw new ArgumentNullException(nameof(model));
         Questions = new ObservableCollection<QuestionViewModel>(_model.Questions.Select(q => new QuestionViewModel(q)));
         Questions.CollectionChanged += Questions_CollectionChanged;
     }
@@ -26,7 +26,9 @@ internal class QuestionPackViewModel : ViewModelBase
             foreach (QuestionViewModel q in e.OldItems) _model.Questions.Remove(q.Question);
 
         if (e.Action == NotifyCollectionChangedAction.Replace && e.OldItems != null && e.NewItems != null)
-            _model.Questions[e.OldStartingIndex] = ((QuestionViewModel)e.NewItems[0]).Question;
+        {
+            if (e.NewItems[0] is QuestionViewModel newQ) _model.Questions[e.OldStartingIndex] = newQ.Question;
+        }
 
         if (e.Action == NotifyCollectionChangedAction.Reset)
             _model.Questions.Clear();

@@ -139,6 +139,16 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
 
     public async Task GetPack()
     {
+        if (SelectedCategorie is null)
+        {
+            _windowService.ShowMessage(
+                "Please choose a category before importing.",
+                "Import",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+            return;
+        }
+
         try
         {
             string diff = SelectedDifficulty.ToString().ToLowerInvariant();

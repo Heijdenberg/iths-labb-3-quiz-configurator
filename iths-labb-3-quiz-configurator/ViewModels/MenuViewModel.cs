@@ -6,7 +6,7 @@ namespace iths_labb_3_quiz_configurator.ViewModels;
 
 class MenuViewModel : ViewModelBase
 {
-    private readonly MainWindowViewModel? _mainWindowViewModel;
+    private readonly MainWindowViewModel _mainWindowViewModel;
     public MenuViewModel(MainWindowViewModel mainWindowViewModel)
     {
         _mainWindowViewModel = mainWindowViewModel ?? throw new ArgumentNullException(nameof(mainWindowViewModel));
@@ -40,7 +40,7 @@ class MenuViewModel : ViewModelBase
     public DelegateCommand RemovePackCommand { get; }
 
 
-    public QuestionPackViewModel ActivePack
+    public QuestionPackViewModel? ActivePack
     {
         get => _mainWindowViewModel.ActivePack;
         set => _mainWindowViewModel.ActivePack = value;

@@ -9,27 +9,26 @@ namespace iths_labb_3_quiz_configurator.ViewModels;
 class PlayerViewModel : ViewModelBase
 {
     private MainWindowViewModel _mainWindowViewModel;
-    private readonly QuestionPackViewModel _activePack;
-    private static Random _rng;
+    private readonly QuestionPackViewModel? _activePack;
+    private static readonly Random _rng = new();
     private DispatcherTimer _timer;
     private int _currentTime;
-    int _numberOfQuestions;
-    int _numberOfCorrectAnswers;
-    int _index;
-    private string _query;
-    private Alternative _correctAlt;
-    private Alternative _alt1;
-    private Alternative _alt2;
-    private Alternative _alt3;
-    private Alternative _alt4;
-    private string _questionOfTotal;
+    private int _numberOfQuestions = 0;
+    private int _numberOfCorrectAnswers;
+    private int _index;
+    private string _query = "";
+    private Alternative _correctAlt = new();
+    private Alternative _alt1 = new();
+    private Alternative _alt2 = new();
+    private Alternative _alt3 = new();
+    private Alternative _alt4 = new();
+    private string _questionOfTotal = "";
 
     public PlayerViewModel(MainWindowViewModel mainWindowViewModel)
     {
-        _mainWindowViewModel = mainWindowViewModel;
-        _activePack = _mainWindowViewModel.ActivePack;
-        _numberOfQuestions = _activePack.Questions.Count;
-        _rng = new Random();
+        _mainWindowViewModel = mainWindowViewModel ?? throw new ArgumentNullException(nameof(mainWindowViewModel));
+        _activePack = _mainWindowViewModel.ActivePack ?? throw new InvalidOperationException("PlayerViewModel requires an active pack.");
+        _numberOfQuestions = _activePack!.Questions.Count;
         _currentTime = _activePack.TimeLimitInSeconds;
         _timer = new DispatcherTimer();
         _timer.Interval = TimeSpan.FromSeconds(1);
@@ -110,12 +109,16 @@ class PlayerViewModel : ViewModelBase
 
     public void StartGameLoop()
     {
+        if (_activePack is null) return;
+
         Shuffle(_activePack.Questions);
         GameLoop();
     }
 
     private void GameLoop()
     {
+        if (_activePack is null) return;
+
         int TimeLimit = _activePack.TimeLimitInSeconds;
         CurrentQuestion();
         _timer.Start();
@@ -141,38 +144,39 @@ class PlayerViewModel : ViewModelBase
 
     private async void MakeAGuess(object? obj)
     {
-        if (obj is Alternative alt)
+
+        if (obj is not Alternative alt) return;
+        
+        Brush correctColor = Brushes.Green;
+        Brush wrongColor = Brushes.Red;
+        if (alt == _correctAlt)
         {
-            Brush correctColor = Brushes.Green;
-            Brush wrongColor = Brushes.Red;
-            if (alt == _correctAlt)
-            {
-                _numberOfCorrectAnswers++;
+            _numberOfCorrectAnswers++;
 
-                if (Alt1 == _correctAlt) Alt1.Bg = correctColor;
-                if (Alt2 == _correctAlt) Alt2.Bg = correctColor;
-                if (Alt3 == _correctAlt) Alt3.Bg = correctColor;
-                if (Alt4 == _correctAlt) Alt4.Bg = correctColor;
-            }
-            else
-            {
-                if (Alt1 == alt) Alt1.Bg = wrongColor;
-                if (Alt2 == alt) Alt2.Bg = wrongColor;
-                if (Alt3 == alt) Alt3.Bg = wrongColor;
-                if (Alt4 == alt) Alt4.Bg = wrongColor;
-
-                var correctAnswer = _activePack.Questions[_index].CorrectAnswer;
-                if (Alt1 == _correctAlt) Alt1.Bg = correctColor;
-                if (Alt2 == _correctAlt) Alt2.Bg = correctColor;
-                if (Alt3 == _correctAlt) Alt3.Bg = correctColor;
-                if (Alt4 == _correctAlt) Alt4.Bg = correctColor;
-            }
-
-            RaisePropertyChanged(nameof(Alt1));
-            RaisePropertyChanged(nameof(Alt2));
-            RaisePropertyChanged(nameof(Alt3));
-            RaisePropertyChanged(nameof(Alt4));
+            if (Alt1 == _correctAlt) Alt1.Bg = correctColor;
+            if (Alt2 == _correctAlt) Alt2.Bg = correctColor;
+            if (Alt3 == _correctAlt) Alt3.Bg = correctColor;
+            if (Alt4 == _correctAlt) Alt4.Bg = correctColor;
         }
+        else
+        {
+            if (Alt1 == alt) Alt1.Bg = wrongColor;
+            if (Alt2 == alt) Alt2.Bg = wrongColor;
+            if (Alt3 == alt) Alt3.Bg = wrongColor;
+            if (Alt4 == alt) Alt4.Bg = wrongColor;
+
+            var correctAnswer = _activePack!.Questions[_index].CorrectAnswer;
+            if (Alt1 == _correctAlt) Alt1.Bg = correctColor;
+            if (Alt2 == _correctAlt) Alt2.Bg = correctColor;
+            if (Alt3 == _correctAlt) Alt3.Bg = correctColor;
+            if (Alt4 == _correctAlt) Alt4.Bg = correctColor;
+        }
+
+        RaisePropertyChanged(nameof(Alt1));
+        RaisePropertyChanged(nameof(Alt2));
+        RaisePropertyChanged(nameof(Alt3));
+        RaisePropertyChanged(nameof(Alt4));
+        
 
         await Task.Delay(1500);
 
@@ -182,10 +186,18 @@ class PlayerViewModel : ViewModelBase
     private void NextQuestion()
     {
         _timer.Stop();
+
         _index++;
         if (_index < _numberOfQuestions)
         {
-            _currentTime = _activePack.TimeLimitInSeconds;
+            var pack = _activePack;
+            if (pack is null)
+            { 
+                GameOver();
+                return; 
+            }
+
+            _currentTime = pack.TimeLimitInSeconds;
             CurrentQuestion();
             _timer.Start();
         }
@@ -197,7 +209,7 @@ class PlayerViewModel : ViewModelBase
 
     private void CurrentQuestion()
     {
-        QuestionViewModel q = _activePack.Questions[_index];
+        QuestionViewModel q = _activePack!.Questions[_index];
 
         QuestionOfTotal = $"Question {_index + 1} of {_numberOfQuestions}";
 

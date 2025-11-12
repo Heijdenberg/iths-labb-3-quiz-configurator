@@ -16,5 +16,5 @@ public class QuestionPack
     public Difficulty Difficulty { get; set; }
     public int TimeLimitInSeconds { get; set; }
 
-    public List<Question> Questions { get; set; }
+    public List<Question> Questions { get; set; } = new();
 }
