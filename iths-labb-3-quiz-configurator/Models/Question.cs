@@ -1,4 +1,5 @@
-﻿namespace iths_labb_3_quiz_configurator.Models;
+﻿
+namespace iths_labb_3_quiz_configurator.Models;
 
 public class Question
 {

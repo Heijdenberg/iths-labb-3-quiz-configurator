@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using iths_labb_3_quiz_configurator.Views;
 
 namespace iths_labb_3_quiz_configurator.Services;

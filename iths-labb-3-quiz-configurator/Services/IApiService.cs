@@ -1,7 +1,6 @@
 ﻿using iths_labb_3_quiz_configurator.Models;
 using System.Collections.ObjectModel;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace iths_labb_3_quiz_configurator.Services;
 

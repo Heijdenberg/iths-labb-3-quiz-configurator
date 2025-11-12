@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace iths_labb_3_quiz_configurator.Models;
 
 public enum Difficulty { Easy, Medium, Hard }

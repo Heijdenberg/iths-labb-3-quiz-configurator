@@ -1,18 +1,7 @@
-﻿using iths_labb_3_quiz_configurator.Command;
-using iths_labb_3_quiz_configurator.Models;
+﻿using iths_labb_3_quiz_configurator.Models;
 using iths_labb_3_quiz_configurator.Services;
-using iths_labb_3_quiz_configurator.Views.DialogUserContols;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Linq;
-using System.Runtime.InteropServices.ObjectiveC;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace iths_labb_3_quiz_configurator.ViewModels;

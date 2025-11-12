@@ -1,7 +1,4 @@
-﻿using iths_labb_3_quiz_configurator.ViewModels;
-using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 
 namespace iths_labb_3_quiz_configurator;
 

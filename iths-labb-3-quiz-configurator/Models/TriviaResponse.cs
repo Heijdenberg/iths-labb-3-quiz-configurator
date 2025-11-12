@@ -1,10 +1,5 @@
-﻿using iths_labb_3_quiz_configurator.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+
 
 namespace iths_labb_3_quiz_configurator.Models;
 

@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Windows.Media;
 
-namespace iths_labb_3_quiz_configurator.Models
+namespace iths_labb_3_quiz_configurator.Models;
+
+class Alternative
 {
-    class Alternative
+    private readonly string _alternative;
+    private Brush _bgColor;
+
+    public Alternative(string alternative)
     {
-        private readonly string _alternative;
-        private Brush _bgColor;
+        _alternative = alternative;
+        _bgColor = Brushes.Transparent;
+    }
 
-        public Alternative(string alternative)
-        {
-            _alternative = alternative;
-            _bgColor = Brushes.Transparent;
-        }
+    public string Alt
+    {
+        get => _alternative;
+    }
 
-        public string Alt
-        {
-            get => _alternative;
-        }
-
-        public Brush Bg
-        {
-            get => _bgColor;
-            set => _bgColor = value;
-        }
+    public Brush Bg
+    {
+        get => _bgColor;
+        set => _bgColor = value;
     }
 }

@@ -1,13 +1,5 @@
 ﻿using iths_labb_3_quiz_configurator.Command;
-using iths_labb_3_quiz_configurator.Models;
-using System;
-using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 
 namespace iths_labb_3_quiz_configurator.ViewModels;
 
