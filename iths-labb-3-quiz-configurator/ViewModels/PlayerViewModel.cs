@@ -23,6 +23,7 @@ class PlayerViewModel : ViewModelBase
     private Alternative _alt3 = new();
     private Alternative _alt4 = new();
     private string _questionOfTotal = "";
+    private ObservableCollection<QuestionViewModel> _shuffledQuestions = new();
 
     public PlayerViewModel(MainWindowViewModel mainWindowViewModel)
     {
@@ -111,7 +112,11 @@ class PlayerViewModel : ViewModelBase
     {
         if (_activePack is null) return;
 
-        Shuffle(_activePack.Questions);
+        _shuffledQuestions = new ObservableCollection < QuestionViewModel >(_activePack.Questions.ToList());
+
+        Shuffle(_shuffledQuestions);
+
+        _index = 0;
         GameLoop();
     }
 
@@ -165,7 +170,7 @@ class PlayerViewModel : ViewModelBase
             if (Alt3 == alt) Alt3.Bg = wrongColor;
             if (Alt4 == alt) Alt4.Bg = wrongColor;
 
-            var correctAnswer = _activePack!.Questions[_index].CorrectAnswer;
+            var correctAnswer = _shuffledQuestions[_index].CorrectAnswer;
             if (Alt1 == _correctAlt) Alt1.Bg = correctColor;
             if (Alt2 == _correctAlt) Alt2.Bg = correctColor;
             if (Alt3 == _correctAlt) Alt3.Bg = correctColor;
@@ -209,7 +214,7 @@ class PlayerViewModel : ViewModelBase
 
     private void CurrentQuestion()
     {
-        QuestionViewModel q = _activePack!.Questions[_index];
+        QuestionViewModel q = _shuffledQuestions[_index];
 
         QuestionOfTotal = $"Question {_index + 1} of {_numberOfQuestions}";
 
