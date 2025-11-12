@@ -21,7 +21,7 @@ class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
 
-	private QuestionPackViewModel _activePack;
+	private QuestionPackViewModel? _activePack;
     private ViewModelBase _activeView;
     private readonly IWindowServices _windowService;
     private readonly IDataService _dataService;
@@ -49,7 +49,7 @@ class MainWindowViewModel : ViewModelBase
         ActiveView = ConfigurationViewModel;
     }
 
-    public QuestionPackViewModel ActivePack
+    public QuestionPackViewModel? ActivePack
 	{
 		get => _activePack;
 		set {
@@ -139,6 +139,8 @@ class MainWindowViewModel : ViewModelBase
     }
     public void OpenPackSettings(object? obj)
     {
+        if (ActivePack is null) return;
+        
         PackSettingsViewModel PackSettingsViewModel = new PackSettingsViewModel(ActivePack);
         string name = PackSettingsViewModel.Name;
         bool? result = _windowService.ShowDialog(PackSettingsViewModel);
@@ -170,8 +172,12 @@ class MainWindowViewModel : ViewModelBase
     public void ShowPlayer(object? obj)
     {
         PlayerViewModel = new PlayerViewModel(this);
-        if (PlayerViewModel != null) ActiveView = PlayerViewModel;
-        PlayerViewModel.StartGameLoop();
+
+        if (PlayerViewModel != null)
+        {
+            ActiveView = PlayerViewModel;
+            PlayerViewModel.StartGameLoop();
+        }
     }
     public bool CanShowConfiguration(object? arg)
     {
@@ -179,7 +185,9 @@ class MainWindowViewModel : ViewModelBase
     }
     public void ShowConfiguration(object? obj)
     {
-        if (ConfigurationViewModel != null) ActiveView = ConfigurationViewModel;
+        if (ConfigurationViewModel is null) return;
+       
+        ActiveView = ConfigurationViewModel;
     }
     public void ShowConfiguration()
     {
@@ -230,6 +238,8 @@ class MainWindowViewModel : ViewModelBase
     }
     public void RemoveQuestion(object? obj)
     {
+        if (ActiveQuestion is null || ActivePack is null) return;
+
         ActivePack.Questions.Remove(ActiveQuestion);
         UserMessage = "Question Removed!";
     }
@@ -240,6 +250,8 @@ class MainWindowViewModel : ViewModelBase
     }
     public void RemoveQuestionPack(object? obj)
     {
+        if (ActivePack is null) return;
+
         Packs.Remove(ActivePack);
         ActivePack = Packs.FirstOrDefault();
 
@@ -252,6 +264,8 @@ class MainWindowViewModel : ViewModelBase
 
     public void AddQuestion(object? obj)
     {
+        if (ActivePack is null) return;
+
         ActivePack.Questions.Add(new QuestionViewModel());
         UserMessage = "Question Added";
     }

@@ -15,7 +15,7 @@ class GameOverViewModel: ViewModelBase
     private int _numberOfCorrectAnswers;
     public GameOverViewModel(int numberOfQuestions, int numberOfCorrectAnswers, MainWindowViewModel mainWindowViewModel)
     {
-        _mainWindowViewModel = mainWindowViewModel;
+        _mainWindowViewModel = mainWindowViewModel ?? throw new ArgumentNullException(nameof(mainWindowViewModel));
         _numberOfQuestions = numberOfQuestions;
         _numberOfCorrectAnswers = numberOfCorrectAnswers;
         RestartCommand = new DelegateCommand(Restart,CanRestart);

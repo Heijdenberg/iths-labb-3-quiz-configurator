@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:iths_labb_3_quiz_configurator.Views"
         xmlns:userControls="clr-namespace:iths_labb_3_quiz_configurator.Views.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="Quiz Configurator"
+        Icon="/Resources/quiz.ico"
         WindowState="{Binding WindowState}"
         Height="450"
         Width="800">

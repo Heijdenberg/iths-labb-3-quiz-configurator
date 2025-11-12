@@ -10,11 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\quiz.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Data\" />
     <Folder Include="Infrastructure\" />
-    <Folder Include="Resources\" />
     <Folder Include="Utils\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\quiz.ico" />
   </ItemGroup>
 
 </Project>

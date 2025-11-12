@@ -33,7 +33,7 @@ class ImportPackViewModel : ViewModelBase, IRequestClose
 
     public ImportPackViewModel(MainWindowViewModel mainWindowViewModel, IApiService apiService, IWindowServices windowService)
     {
-        _mainWindowViewModel = mainWindowViewModel;
+        _mainWindowViewModel = mainWindowViewModel ?? throw new ArgumentNullException(nameof(mainWindowViewModel));
         _apiService = apiService;
         _windowService = windowService;
 

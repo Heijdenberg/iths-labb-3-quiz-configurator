@@ -29,13 +29,15 @@
                                     Value="Center" />
                             <Setter Property="VerticalAlignment"
                                     Value="Center" />
+                            <Setter Property="FontSize"
+                                    Value="9" />
                         </Style>
                     </StackPanel.Resources>
-                    <Button Content="O"
+                    <Button Content="⚙️"
                             Command="{Binding PackSettingsCommand}"/>
-                    <Button Content="+"
+                    <Button Content="➕"
                             Command="{Binding AddQuestionCommand}" />
-                    <Button Content="-"
+                    <Button Content="➖"
                             Command="{Binding RemoveQuestionCommand}" />
                 </StackPanel>
                 <Label />
@@ -46,6 +48,7 @@
                      SelectedItem="{Binding ActiveQuestion}" />
         </Grid>
         <StackPanel Grid.Column="1"
+                    Visibility="{Binding QVisible}"
                     Margin="20">
             <Label Content="Question:" />
             <TextBox Text="{Binding ActiveQuestion.Query, UpdateSourceTrigger=PropertyChanged}"

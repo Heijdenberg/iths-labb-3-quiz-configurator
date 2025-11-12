@@ -64,7 +64,7 @@
                               Header="Play"
                               Command="{Binding ShowPlayerCommand}"
                               InputGestureText="Ctrl+P" />
-                    <MenuItem Icon="⚙️"
+                    <MenuItem Icon="📝"
                               Header="Edit"
                               Command="{Binding ShowConfigurationCommand}"
                               InputGestureText="Ctrl+E" />
