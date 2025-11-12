@@ -16,9 +16,7 @@ public class Question
         IncorrectAnswers = new[] { incorrectAnswer1, incorrectAnswer2, incorrectAnswer3 };
     }
 
-    public string Query { get; set; }
-
-    public string CorrectAnswer { get; set; }
-
+    public string Query { get; set; } = "";
+    public string CorrectAnswer { get; set; } = "";
     public string[] IncorrectAnswers { get; set; }
 }
