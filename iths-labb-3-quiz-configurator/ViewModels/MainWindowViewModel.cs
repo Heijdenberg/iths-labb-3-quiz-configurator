@@ -11,13 +11,13 @@ class MainWindowViewModel : ViewModelBase
     public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
 
     private QuestionPackViewModel? _activePack;
-    private ViewModelBase _activeView;
+    private ViewModelBase? _activeView;
     private readonly IWindowServices _windowService;
     private readonly IDataService _dataService;
     private readonly DispatcherTimer _autoSaveTimer;
     private QuestionViewModel? _activeQuestion;
     private WindowState _windowState;
-    private string _userMessage;
+    private string _userMessage = "";
 
 
     public MainWindowViewModel(IWindowServices windowService, IDataService dataService)
@@ -68,7 +68,7 @@ class MainWindowViewModel : ViewModelBase
             RaisePropertyChanged();
         }
     }
-    public ViewModelBase ActiveView
+    public ViewModelBase? ActiveView
     {
         get => _activeView;
         set
