@@ -14,13 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Converters\" />
-    <Folder Include="Data\" />
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Utils\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Resources\quiz.ico" />
   </ItemGroup>
 
